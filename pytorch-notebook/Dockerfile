@@ -15,7 +15,6 @@ RUN conda install -c conda-forge --quiet --yes \
     jupyterhub \
     jupyterlab \
     jupyterthemes && \
-    conda clean --all -f -y && \
     npm cache clean --force && \
     jupyter lab clean
 
@@ -24,7 +23,7 @@ RUN conda install --quiet --yes \
     numpy \
     scipy \
     seaborn && \
-    conda clearn --all -f -y
+    conda clean --all -f -y
 
 RUN pip3 install --upgrade --no-cache-dir \
     bidict \
