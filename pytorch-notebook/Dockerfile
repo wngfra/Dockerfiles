@@ -10,19 +10,18 @@ FROM $BASE_IMAGE
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-RUN conda install -c conda-forge --quiet --yes \
+RUN conda update conda --yes && \
+    conda install -c conda-forge --quiet --yes \
     nodejs \
     jupyterhub \
     jupyterlab \
-    jupyterthemes && \
-    npm cache clean --force && \
-    jupyter lab clean
-
-RUN conda install --quiet --yes \
+    jupyterthemes \
     matplotlib \
     numpy \
     scipy \
     seaborn && \
+    npm cache clean --force && \
+    jupyter lab clean && \
     conda clean --all -f -y
 
 RUN pip3 install --upgrade --no-cache-dir \
@@ -37,7 +36,5 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/
 RUN chmod +x /usr/bin/tini
 
 EXPOSE 8888
-
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["jupyter-lab", "--port=8888", "--no-browser", "--allow-root"]
-
