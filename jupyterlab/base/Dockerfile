@@ -18,7 +18,7 @@ RUN conda update conda --yes && \
     jupyterthemes \
     matplotlib \
     numpy \
-    pandas \
+    pandas && \
     npm cache clean --force && \
     jupyter lab clean && \
     conda clean --all -f -y
