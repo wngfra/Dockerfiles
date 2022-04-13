@@ -7,5 +7,5 @@ FROM $BASE_IMAGE
 # Install snntorch
 RUN conda update conda --yes && \
     conda install -c conda-forge --quiet --yes \
-    snntorch \
+    snntorch && \
     conda clean --all -f -y
