@@ -20,8 +20,7 @@ RUN conda update conda --yes && \
     numpy \
     pandas && \
     npm cache clean --force && \
-    jupyter lab clean && \
-    conda clean --all -f -y
+    jupyter lab clean
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.19.0

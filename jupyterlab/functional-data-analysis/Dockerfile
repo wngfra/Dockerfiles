@@ -10,8 +10,7 @@ FROM $BASE_IMAGE
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-RUN conda update conda --yes && \
-    conda install -c conda-forge --quiet --yes \
+RUN conda install -c conda-forge --quiet --yes \
     scipy \
     seaborn && \
     conda clean --all -f -y
