@@ -1,7 +1,7 @@
 # Copyright (c) 2020 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG BASE_IMAGE=nvcr.io/nvidia/pytorch:21.12-py3
+ARG BASE_IMAGE=nvcr.io/nvidia/pytorch:22.03-py3
 FROM $BASE_IMAGE
 
 # Install Jupyter Lab, and Hub
