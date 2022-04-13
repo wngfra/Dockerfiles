@@ -5,7 +5,6 @@ ARG BASE_IMAGE=wngfra/dl-jupyterlab:base
 FROM $BASE_IMAGE
 
 # Install snntorch
-RUN conda install -c conda-forge --quiet --yes \
-    brian2 \
-    snntorch && \
+RUN conda install --yes -c conda-forge brian2 snntorch && \
+    conda install --yes -c norse norse && \
     conda clean --all -f -y
