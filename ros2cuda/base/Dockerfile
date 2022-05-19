@@ -24,7 +24,8 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
     git \
     gnupg \
     lsb-release && \
-    add-apt-repository universe
+    add-apt-repository universe && \
+    apt autoclean -y
 
 # setup keys and sources.list
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg && \
