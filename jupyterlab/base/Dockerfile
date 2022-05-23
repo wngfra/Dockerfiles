@@ -1,16 +1,22 @@
 # Copyright (c) 2020 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG FROM_IMAGE=nvcr.io/nvidia/cuda:11.6.2-runtime-ubuntu20.04
+ARG FROM_IMAGE=nvidia/cuda:11.7.0-runtime-ubuntu22.04
 FROM $FROM_IMAGE
 
+# Install base utilities
+RUN apt update && \
+    apt install -y wget && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install miniconda
+ENV CONDA_DIR /opt/conda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-    rm ~/miniconda.sh && \
-    /opt/conda/bin/conda clean -tipsy && \
-    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc
+     /bin/bash ~/miniconda.sh -b -p /opt/conda
+
+# Put conda in path so we can use conda activate
+ENV PATH=$CONDA_DIR/bin:$PATH
 
 # Install Jupyter Lab, and Hub
 # Generate a notebook server config
