@@ -11,7 +11,7 @@ FROM $BASE_IMAGE
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
 RUN conda install --yes pandas && \
-    conda install pytorch torchvision cudatoolkit=11.3 -c pytorch --yes && \
+    conda install pytorch torchvision cpuonly -c pytorch --yes && \
     conda clean --all -f -y
 
 RUN pip3 install --upgrade --no-cache-dir \

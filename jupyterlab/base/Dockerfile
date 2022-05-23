@@ -6,7 +6,7 @@ FROM $FROM_IMAGE
 
 # Install base utilities
 RUN apt update && \
-    apt install -y wget && \
+    apt install -y wget build-essential && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
