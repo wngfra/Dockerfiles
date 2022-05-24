@@ -6,7 +6,7 @@ FROM $FROM_IMAGE
 
 # Install base utilities
 RUN apt update && \
-    apt install -y wget build-essential && \
+    apt install -y wget build-essential --no-install-recommends && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -27,11 +27,8 @@ ENV PATH=$CONDA_DIR/bin:$PATH
 RUN conda update conda --yes && \
     conda install -c conda-forge --quiet --yes \
     nodejs \
-    jupyterhub \
-    jupyterlab \
-    jupyterthemes \
-    matplotlib \
-    numpy && \
+    jupyterlab && \
+    conda clean -a -q -y && \
     npm cache clean --force && \
     jupyter lab clean
 
@@ -42,4 +39,4 @@ RUN chmod +x /usr/bin/tini
 
 EXPOSE 8888
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["jupyter-lab", "--port=8888", "--no-browser", "--allow-root"]
+CMD ["jupyter-lab", "--ip='0.0.0.0'", "--port=8888", "--no-browser", "--allow-root"]
