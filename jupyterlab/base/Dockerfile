@@ -1,7 +1,7 @@
 # Copyright (c) 2020 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG FROM_IMAGE=nvidia/cuda:11.7.0-runtime-ubuntu22.04
+ARG FROM_IMAGE=nvidia/cuda:11.6.1-runtime-ubuntu20.04
 FROM $FROM_IMAGE
 
 # Install base utilities
