@@ -10,7 +10,7 @@ FROM $BASE_IMAGE
 # Correct permissions
 # Do all this in a single RUN command to avoid duplicating all of the
 # files across image layers when the permissions change
-RUN conda install --yes pandas && \
+RUN conda install --yes -c conda-forge pandas && \
     conda install pytorch torchvision cpuonly -c pytorch --yes && \
     conda clean --all -f -y
 
