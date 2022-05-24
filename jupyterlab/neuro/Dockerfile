@@ -6,5 +6,11 @@ FROM $BASE_IMAGE
 
 # Install snntorch
 RUN conda install --yes -c conda-forge brian2 && \
-    conda install --yes -c brian-team brian2tools && \
     conda clean --all -f -y
+
+RUN apt update && \
+    apt install git --no-install-recommends -y && \
+    apt clean
+
+RUN git clone https://github.com/brian-team/brian2tools.git ~/brian2tools && \
+    pip install -e ~/brian2tools/
