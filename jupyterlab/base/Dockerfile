@@ -30,6 +30,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH
 RUN conda update conda --yes && \
     conda install -c conda-forge --quiet --yes \
     nodejs \
+    ipympl \
     jupyterlab && \
     conda clean -a -q -y && \
     npm cache clean --force && \
