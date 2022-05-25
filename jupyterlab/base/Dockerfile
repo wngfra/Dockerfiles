@@ -6,7 +6,10 @@ FROM $FROM_IMAGE
 
 # Install base utilities
 RUN apt update && \
-    apt install -y wget build-essential --no-install-recommends && \
+    apt install -y --no-install-recommends \
+    build-essential \
+    git \
+    wget && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
