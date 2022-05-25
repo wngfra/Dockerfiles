@@ -22,7 +22,7 @@ RUN conda update conda --yes && \
 RUN pip3 install -U --no-cache-dir \
     scikit-fda
 
-WORKDIR /workdir
+WORKDIR /workspace
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.19.0

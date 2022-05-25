@@ -10,3 +10,5 @@ RUN conda install --yes -c conda-forge brian2 && \
 
 RUN git clone https://github.com/brian-team/brian2tools.git ~/brian2tools && \
     pip install -e ~/brian2tools/
+
+WORKDIR /workspace
