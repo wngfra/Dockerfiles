@@ -5,7 +5,11 @@ ARG BASE_IMAGE=wngfra/dl-jupyterlab:base
 FROM $BASE_IMAGE
 
 # Install snntorch
-RUN conda install --yes -c conda-forge brian2 shapely && \
+RUN conda install --yes -c conda-forge \
+    brian2 \
+    opencv \
+    pyserial \
+    shapely && \
     conda clean --all -f -y
 
 RUN git clone https://github.com/brian-team/brian2tools.git ~/brian2tools && \

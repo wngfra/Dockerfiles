@@ -29,6 +29,7 @@ ENV PATH=$CONDA_DIR/bin:$PATH
 # files across image layers when the permissions change
 RUN conda update conda --yes && \
     conda install -c conda-forge --quiet --yes \
+    matplotlib \
     nodejs \
     ipympl \
     jupyterlab && \
