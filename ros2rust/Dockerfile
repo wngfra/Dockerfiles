@@ -1,7 +1,7 @@
 # Copyright (c) 2020 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG FROM_IMAGE=nvcr.io/nvidia/cuda:11.7.0-runtime-ubuntu20.04
+ARG FROM_IMAGE=ubuntu:latest
 FROM $FROM_IMAGE
 
 # setup timezone
@@ -43,13 +43,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libeigen3-dev \
     libpoco-dev \
     python3-dev \
-    python3-pip && \
+    python3-pip \ 
+    python3-vcstool && \
     rm -rf /var/lib/apt/lists/*
-
-RUN pip3 install -U\
-    argcomplete \
-    colcon-common-extensions \
-    pytest-rerunfailures
 
 # Download, build and install libfranka
 RUN git clone --recursive https://github.com/frankaemika/libfranka.git /usr/src/libfranka
@@ -66,5 +62,27 @@ RUN useradd -rm -d /ubuntu -s /bin/bash -u 1000 ubuntu \
 # Change default user
 WORKDIR /ubuntu/ros2_ws
 USER ubuntu
+
+# Get Rust
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y && \
+    echo 'source $HOME/.cargo/env' >> /ubuntu/.bashrc
+
+# Add ROS2 python tools
+RUN pip3 install -U\
+    argcomplete \
+    colcon-common-extensions \
+    pytest-rerunfailures
+
+# Install these plugins for cargo and colcon:
+SHELL ["/bin/bash", "-c", "source /ubuntu/.bashrc"]
+RUN cargo install --debug cargo-ament-build  && \
+    pip install git+https://github.com/colcon/colcon-cargo.git && \
+    pip install git+https://github.com/colcon/colcon-ros-cargo.git
+
+RUN mkdir -p /ubuntu/ros2_ws/src && \
+    git clone https://github.com/ros2-rust/ros2_rust.git src/ros2_rust && \
+    vcs import src < src/ros2_rust/ros2_${ROS_DISTRO}.repos && \
+    . /opt/ros/foxy/setup.sh && \
+    colcon build
 
 CMD ["bash"]
