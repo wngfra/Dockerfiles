@@ -9,6 +9,7 @@ RUN conda install --yes -c conda-forge \
     brian2 \
     nengo \
     nengo-gui \
+    nest-simulator \
     opencv && \
     conda clean --all -f -y
 
