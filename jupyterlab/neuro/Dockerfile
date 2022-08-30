@@ -7,6 +7,8 @@ FROM $BASE_IMAGE
 # Install snntorch
 RUN conda install --yes -c conda-forge \
     brian2 \
+    nengo \
+    nengo-gui \
     opencv && \
     conda clean --all -f -y
 
