@@ -21,30 +21,16 @@ RUN cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF .. \
     && make \
     && make install
 
-# Create a non-root user
-RUN useradd -rm -d /ubuntu -s /bin/bash -u 1000 ubuntu \
-    && echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /ubuntu/.bashrc \
-    && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /ubuntu/.bashrc
-
-# Change default user
-USER ubuntu
-
-# Add ROS2 python tools
-RUN pip install -U\
-    argcomplete \
-    colcon-common-extensions \
-    pytest-rerunfailures
+RUN pip install --upgrade pytest 
 
 # Get Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y && \
-    echo 'source $HOME/.cargo/env' >> /ubuntu/.bashrc
-SHELL ["/bin/bash", "-c", "source /ubuntu/.bashrc"]
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+ENV PATH=/root/.cargo/bin:$PATH
 
 # Install these plugins for cargo and colcon:
 RUN cargo install --debug cargo-ament-build  && \
     pip install git+https://github.com/colcon/colcon-cargo.git && \
     pip install git+https://github.com/colcon/colcon-ros-cargo.git
 
-WORKDIR /ubuntu
-
-CMD ["bash"]
+RUN mkdir -p /workspace && echo "Did you forget to mount the repository into the Docker container?" > /workspace/HELLO.txt
+WORKDIR /workspace
