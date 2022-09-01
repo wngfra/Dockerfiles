@@ -8,7 +8,7 @@ FROM $FROM_IMAGE
 RUN apt-get update && apt-get install -q -y --no-install-recommends \
     vim tar xz-utils wget \
     libx11-6 libxcb1 libxau6 libgl1-mesa-dev \
-    xvfb dbus-x11 x11-utils libxkbcommon-x11-0 \
+    xauth xvfb dbus-x11 x11-utils libxkbcommon-x11-0 \
     libavcodec-dev libavformat-dev libswscale-dev \
     && \
     apt-get autoclean -y && apt-get autoremove -y && apt-get clean && \
@@ -18,7 +18,7 @@ RUN mkdir -p /shared /opt
 
 ARG FILENAME=CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04
 
-RUN wget https://www.coppeliarobotics.com/files/${FILENAME}.tar.xz /opt/
+RUN wget https://www.coppeliarobotics.com/files/${FILENAME}.tar.xz -P /opt/
 
 RUN tar -xf /opt/${FILENAME}.tar.xz  -C /opt && \
     rm /opt/${FILENAME}.tar.xz 

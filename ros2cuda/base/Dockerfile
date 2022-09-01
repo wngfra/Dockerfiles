@@ -1,7 +1,7 @@
-# Copyright (c) 2020 wngfra
+# Copyright (c) 2022 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG FROM_IMAGE=nvcr.io/nvidia/cuda:11.7.0-runtime-ubuntu20.04
+ARG FROM_IMAGE=nvcr.io/nvidia/cuda:11.7.0-runtime-ubuntu22.04
 FROM $FROM_IMAGE
 
 # setup timezone
@@ -18,18 +18,20 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
 # install packages
-RUN apt-get update && apt-get install -q -y --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -q -y --no-install-recommends \
     build-essential \
     curl \
     git \
     gnupg \
     lsb-release && \
-    add-apt-repository universe && \
-    apt autoclean -y
+    add-apt-repository universe
+
+SHELL ["/bin/bash", "-c"]
 
 # setup keys and sources.list
-RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
 # Configure environment variables
 ARG ROS_DISTRO=humble
@@ -38,12 +40,14 @@ ENV ROS_VERSION=2 \
     ROS_PYTHON_VERSION=3
 
 # install ros2 packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-desktop \
     libeigen3-dev \
     libpoco-dev \
     python3-dev \
     python3-pip && \
+    apt autoclean -y && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install -U\
