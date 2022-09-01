@@ -51,20 +51,9 @@ RUN pip3 install -U\
     colcon-common-extensions \
     pytest-rerunfailures
 
-# Download, build and install libfranka
-RUN git clone --recursive https://github.com/frankaemika/libfranka.git /usr/src/libfranka
-WORKDIR /usr/src/libfranka/build
-RUN cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF .. \
-    && make \
-    && make install
-
 # Create a non-root user
-RUN useradd -rm -d /ubuntu -s /bin/bash -u 1000 ubuntu \
-    && echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /ubuntu/.bashrc \
-    && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /ubuntu/.bashrc
+RUN echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /root/.bashrc \
+    && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /root/.bashrc
 
-# Change default user
-WORKDIR /ubuntu/ros2_ws
-USER ubuntu
-
+WORKDIR /workspace
 CMD ["bash"]
