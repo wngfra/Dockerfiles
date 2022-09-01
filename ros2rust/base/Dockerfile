@@ -6,6 +6,7 @@ FROM $FROM_IMAGE
 
 # Install packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    clang \
     libclang-dev \
     libeigen3-dev \
     libpoco-dev \
@@ -26,6 +27,7 @@ RUN pip install --upgrade pytest
 # Get Rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 ENV PATH=/root/.cargo/bin:$PATH
+ENV CXX=clang++
 
 # Install these plugins for cargo and colcon:
 RUN cargo install --debug cargo-ament-build  && \
