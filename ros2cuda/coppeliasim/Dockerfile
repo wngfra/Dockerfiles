@@ -6,8 +6,6 @@ FROM $FROM_IMAGE
 
 USER root
 
-SHELL ["/bin/bash", "-c"]
-
 # install packages
 RUN apt-get update && apt-get install -q -y --no-install-recommends \
     vim tar xz-utils wget \
@@ -39,5 +37,5 @@ RUN mkdir -p /workspace/src && \
 
 WORKDIR /workspace
 RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    ulimit -s unlimited && \
     colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
-CMD ["bash"]

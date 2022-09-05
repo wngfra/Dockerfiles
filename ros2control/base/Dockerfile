@@ -4,6 +4,8 @@
 ARG FROM_IMAGE=osrf/ros:humble-desktop-full
 FROM $FROM_IMAGE
 
+SHELL ["/bin/bash", "-c"]
+
 # Install packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     clang \
@@ -26,3 +28,4 @@ RUN pip install -U brian2 matplotlib numpy pyserial scipy
 
 RUN mkdir -p /workspace && echo "Did you forget to mount the repository into the Docker container?" > /workspace/HELLO.txt
 WORKDIR /workspace
+ENTRYPOINT /ros_entrypoint.sh

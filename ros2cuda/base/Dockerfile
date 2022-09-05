@@ -60,4 +60,3 @@ RUN echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /root/.bashrc \
     && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /root/.bashrc
 
 WORKDIR /workspace
-CMD ["bash"]
