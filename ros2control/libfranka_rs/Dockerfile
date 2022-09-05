@@ -1,7 +1,7 @@
 # Copyright (c) 2022 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG FROM_IMAGE=ros2control:base
+ARG FROM_IMAGE=wngfra/ros2control:base
 FROM $FROM_IMAGE
 
 # Install packages
