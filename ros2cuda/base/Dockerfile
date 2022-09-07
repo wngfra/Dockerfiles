@@ -53,6 +53,7 @@ RUN apt-get update && \
 RUN pip3 install -U\
     argcomplete \
     colcon-common-extensions \
+    pyserial \
     pytest-rerunfailures
 
 # Create a non-root user
