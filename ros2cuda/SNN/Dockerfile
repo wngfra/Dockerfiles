@@ -7,6 +7,6 @@ FROM $FROM_IMAGE
 USER root
 
 # Install SNN frameworks
-RUN pip3 install -U brian2 brian2genn
+RUN pip3 install -U brian2 brian2genn nengo
 
 WORKDIR /workspace
