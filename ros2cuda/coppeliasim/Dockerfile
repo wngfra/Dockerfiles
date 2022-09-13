@@ -31,7 +31,7 @@ ENV LD_LIBRARY_PATH=$COPPELIASIM_ROOT_DIR:$LD_LIBRARY_PATH
 ENV PATH=$COPPELIASIM_ROOT_DIR:$PATH
 
 # build Coppeliasim ROS2 plugin
-RUN pip3 install -U cbor pyzmq xmlschema
+RUN pip3 install -U cbor pyzmq xmlschema nengo nengo-gui
 RUN mkdir -p /workspace/src && \
     cp -r ${COPPELIASIM_ROOT_DIR}/programming/ros2_packages /workspace/src/
 
