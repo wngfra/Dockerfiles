@@ -24,7 +24,9 @@ RUN apt-get update && \
     curl \
     git \
     gnupg \
-    lsb-release && \
+    lsb-release \
+    tmux \
+    vim && \
     add-apt-repository universe
 
 SHELL ["/bin/bash", "-c"]

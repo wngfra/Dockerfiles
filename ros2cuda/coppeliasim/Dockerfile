@@ -8,7 +8,7 @@ USER root
 
 # install packages
 RUN apt-get update && apt-get install -q -y --no-install-recommends \
-    vim tar xz-utils wget \
+    tar xz-utils wget \
     libx11-6 libxcb1 libxau6 libgl1-mesa-dev \
     xauth xvfb dbus-x11 x11-utils libxkbcommon-x11-0 \
     libavcodec-dev libavformat-dev libswscale-dev \
