@@ -24,7 +24,7 @@ RUN add-apt-repository ppa:nest-simulator/nest && \
     nest && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install -U brian2 matplotlib numpy pyserial scipy
+RUN pip install -U autopep8 matplotlib nengo numpy pyserial scipy
 
 RUN mkdir -p /workspace && echo "Did you forget to mount the repository into the Docker container?" > /workspace/HELLO.txt
 WORKDIR /workspace

@@ -54,6 +54,7 @@ RUN apt-get update && \
 
 RUN pip3 install -U\
     argcomplete \
+    autopep8 \
     colcon-common-extensions \
     pyserial \
     pytest-rerunfailures
