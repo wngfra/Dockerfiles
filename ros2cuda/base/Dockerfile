@@ -41,15 +41,20 @@ ENV ROS_DISTRO=$ROS_DISTRO
 ENV ROS_VERSION=2 \
     ROS_PYTHON_VERSION=3
 
-# install ros2 packages
+# Install ros2 packages and other tools
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -q -y --no-install-recommends \
     ros-${ROS_DISTRO}-desktop \
     libeigen3-dev \
     libpoco-dev \
     python3-dev \
-    python3-pip && \
-    apt autoclean -y && \
+    python3-pip \
+    tar xz-utils wget \
+    libx11-6 libxcb1 libxau6 libgl1-mesa-dev \
+    xauth xvfb dbus-x11 x11-utils libxkbcommon-x11-0 \
+    libavcodec-dev libavformat-dev libswscale-dev \
+    xsltproc && \
+    apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install -U\

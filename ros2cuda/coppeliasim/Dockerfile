@@ -6,17 +6,6 @@ FROM $FROM_IMAGE
 
 USER root
 
-# install packages
-RUN apt-get update && apt-get install -q -y --no-install-recommends \
-    tar xz-utils wget \
-    libx11-6 libxcb1 libxau6 libgl1-mesa-dev \
-    xauth xvfb dbus-x11 x11-utils libxkbcommon-x11-0 \
-    libavcodec-dev libavformat-dev libswscale-dev \
-    xsltproc \
-    && \
-    apt-get autoclean -y && apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
-
 RUN mkdir -p /shared /opt
 
 ARG FILENAME=CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04
@@ -24,15 +13,14 @@ ARG FILENAME=CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04
 RUN wget https://www.coppeliarobotics.com/files/${FILENAME}.tar.xz -P /opt/
 
 RUN tar -xf /opt/${FILENAME}.tar.xz -C /opt/ && \
-    rm /opt/${FILENAME}.tar.xz 
+    rm /opt/${FILENAME}.tar.xz
 
 ENV COPPELIASIM_ROOT_DIR=/opt/${FILENAME}
 ENV LD_LIBRARY_PATH=$COPPELIASIM_ROOT_DIR:$LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 ENV PATH=$COPPELIASIM_ROOT_DIR:$PATH
 
 # build Coppeliasim ROS2 plugin
-RUN pip3 install -U cbor nengo nengo-gui pyzmq xmlschema 
+RUN pip3 install -U cbor pyzmq xmlschema 
 RUN mkdir -p /workspace/src && \
     cp -r ${COPPELIASIM_ROOT_DIR}/programming/ros2_packages /workspace/src/
 
