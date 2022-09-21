@@ -25,8 +25,11 @@ RUN apt-get update && \
     git \
     gnupg \
     lsb-release \
+    tar \
     tmux \
-    vim && \
+    vim \
+    wget \
+    xz-utils && \
     add-apt-repository universe
 
 SHELL ["/bin/bash", "-c"]
@@ -49,9 +52,8 @@ RUN apt-get update && \
     libpoco-dev \
     python3-dev \
     python3-pip \
-    tar xz-utils wget \
-    libx11-6 libxcb1 libxau6 libgl1-mesa-dev \
-    xauth xvfb dbus-x11 x11-utils libxkbcommon-x11-0 \
+    libgl1-mesa-dev libx11-6 libxau6 libxcb1 libxkbcommon-x11-0 \
+    xauth xvfb dbus-x11 x11-utils \
     libavcodec-dev libavformat-dev libswscale-dev \
     xsltproc && \
     apt-get autoclean -y && apt-get autoremove -y && \
