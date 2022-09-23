@@ -8,7 +8,7 @@ USER root
 
 RUN mkdir -p /shared /opt
 
-ARG FILENAME=CoppeliaSim_Edu_V4_3_0_rev12_Ubuntu20_04
+ARG FILENAME=CoppeliaSim_Edu_V4_4_0_rev0_Ubuntu20_04
 
 RUN wget https://www.coppeliarobotics.com/files/${FILENAME}.tar.xz -P /opt/
 
