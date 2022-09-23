@@ -6,12 +6,10 @@ FROM $FROM_IMAGE
 
 USER root
 
-RUN mkdir -p /shared /opt
-
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
 # Install nengo packages
-RUN pip3 install -U nengo nengo-loihi
+RUN pip3 install -U nengo nengo-loihi opencv-python
 RUN mkdir -p /workspace/src
 
 WORKDIR /workspace
