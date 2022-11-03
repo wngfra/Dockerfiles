@@ -6,6 +6,9 @@ FROM $FROM_IMAGE
 
 USER root
 
+RUN echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /root/.bashrc \
+    && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /root/.bashrc
+
 RUN mkdir -p /shared /opt
 
 ARG FILENAME=CoppeliaSim_Edu_V4_4_0_rev0_Ubuntu20_04
