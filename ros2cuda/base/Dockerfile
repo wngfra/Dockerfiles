@@ -59,6 +59,11 @@ RUN apt-get update && \
     apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
+# Create a non-root user
+RUN useradd -ms /bin/bash ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu
+
 RUN pip3 install -U\
     argcomplete \
     autopep8 \
@@ -66,8 +71,5 @@ RUN pip3 install -U\
     pyserial \
     pytest-rerunfailures
 
-# Create a non-root user
-RUN echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /root/.bashrc \
-    && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /root/.bashrc
-
-WORKDIR /workspace
+RUN echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /home/ubuntu/.bashrc \
+    && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /home/ubuntu/.bashrc
