@@ -6,6 +6,13 @@ FROM $FROM_IMAGE
 
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
+# Create a non-root user
+RUN useradd -ms /bin/bash ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu
+RUN echo 'source "/opt/ros/$ROS_DISTRO/setup.bash"' >> /home/ubuntu/.bashrc \
+    && echo 'export XLA_PYTHON_CLIENT_MEM_FRACTION=.60' >> /home/ubuntu/.bashrc
+
 # Install pyhton packages
 RUN pip3 install -U mujoco dm-control nengo scikit-learn moderngl
 RUN mkdir -p /home/ubuntu/workspace/src
