@@ -4,8 +4,6 @@
 ARG FROM_IMAGE=wngfra/ros2cuda:base
 FROM $FROM_IMAGE
 
-USER ubuntu
-
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
 # Install pyhton packages
