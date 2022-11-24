@@ -1,7 +1,7 @@
 # Copyright (c) 2022 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG FROM_IMAGE=nvidia/cuda:11.7.1-runtime-ubuntu22.04
+ARG FROM_IMAGE=nvidia/cuda:11.8.0-runtime-ubuntu22.04
 FROM $FROM_IMAGE
 
 # Install base utilities
@@ -21,21 +21,31 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 # Put conda in path so we can use conda activate
 ENV PATH=$CONDA_DIR/bin:$PATH
 
-# Install Jupyter Lab, and Hub
-# Generate a notebook server config
-# Cleanup temporary files
-# Correct permissions
-# Do all this in a single RUN command to avoid duplicating all of the
-# files across image layers when the permissions change
+# Install Jupyter Lab, and packages for DL and NC
 RUN conda update conda --yes && \
-    conda install -c conda-forge --quiet --yes \
+    conda install -c pytorch -c conda-forge --quiet --yes \
+    numpy \
+    scipy \
+    scikit-learn \
     matplotlib \
+    ffmpeg \
+    brian2 \
+    nengo \
+    nengo-gui \
+    opencv \
+    pytorch torchvision torchaudio cudatoolkit=11.7 \
     nodejs \
     ipympl \
     jupyterlab && \
     conda clean -a -q -y && \
     npm cache clean --force && \
     jupyter lab clean
+
+RUN pip3 install --quiet 'brian2tools @ git+https://github.com/brian-team/brian2tools.git' \
+    mujoco \
+    dm_control && \
+    pip3 cache remove * && \
+    pip3 cache purge
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.19.0
