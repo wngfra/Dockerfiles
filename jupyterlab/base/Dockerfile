@@ -41,9 +41,8 @@ RUN conda update conda --yes && \
     npm cache clean --force && \
     jupyter lab clean
 
-RUN pip3 install --quiet 'brian2tools @ git+https://github.com/brian-team/brian2tools.git' \
-    mujoco \
-    dm_control && \
+RUN pip3 install --quiet 'brian2tools @ git+https://github.com/brian-team/brian2tools.git' && \
+    pip3 install --quiet mujoco dm_control && \
     pip3 cache remove * && \
     pip3 cache purge
 
