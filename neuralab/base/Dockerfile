@@ -33,7 +33,6 @@ RUN conda update conda --yes && \
     nengo \
     nengo-gui \
     opencv \
-    pytorch torchvision torchaudio cudatoolkit=11.7 \
     nodejs \
     ipympl \
     isort \
