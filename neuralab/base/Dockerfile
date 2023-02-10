@@ -23,16 +23,17 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 # Put conda in path so we can use conda activate
 ENV PATH=$CONDA_DIR/bin:$PATH
 
-# Install Jupyter Lab, and Hub
-# Generate a notebook server config
-# Cleanup temporary files
-# Correct permissions
-# Do all this in a single RUN command to avoid duplicating all of the
-# files across image layers when the permissions change
+# Install Jupyter Lab, and packages for DL and NC
 RUN conda update conda --yes && \
     conda install -c conda-forge --quiet --yes \
     black \
     matplotlib \
+    ffmpeg \
+    brian2 \
+    nengo \
+    nengo-gui \
+    opencv \
+    pytorch torchvision torchaudio cudatoolkit=11.7 \
     nodejs \
     ipympl \
     isort \
@@ -44,6 +45,7 @@ RUN conda update conda --yes && \
 RUN conda activate base && \
     pip3 install -q -y - U \
     brian2 \
+    dm_control \
     nengo \
     nengo-dl \
     nengo-extras \
