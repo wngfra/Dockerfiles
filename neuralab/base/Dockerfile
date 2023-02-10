@@ -1,8 +1,10 @@
 # Copyright (c) 2022 wngfra
 # Use of this source code is governed by the Apache-2.0 license, see LICENSE
 
-ARG FROM_IMAGE=nvidia/cuda:11.7.1-runtime-ubuntu22.04
+ARG FROM_IMAGE=nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 FROM $FROM_IMAGE
+
+ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
 # Install base utilities
 RUN apt update && \
@@ -29,13 +31,23 @@ ENV PATH=$CONDA_DIR/bin:$PATH
 # files across image layers when the permissions change
 RUN conda update conda --yes && \
     conda install -c conda-forge --quiet --yes \
+    black \
     matplotlib \
     nodejs \
     ipympl \
+    isort \
     jupyterlab && \
     conda clean -a -q -y && \
     npm cache clean --force && \
     jupyter lab clean
+
+RUN conda activate base && \
+    pip3 install -q -y - U \
+    brian2 \
+    nengo \
+    nengo-dl \
+    nengo-extras \
+    nengo-gui
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.19.0

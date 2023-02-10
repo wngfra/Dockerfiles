@@ -1,7 +1,7 @@
-# Copyright (c) 2022 wngfra
-# Use of this source code is governed by the Apache-2.0 license, see LICENSE
+# Copyright 2023 wngfra.
+# SPDX-License-Identifier: Apache-2.0
 
-ARG FROM_IMAGE=nvcr.io/nvidia/cuda:11.7.0-runtime-ubuntu22.04
+ARG FROM_IMAGE=nvcr.io/nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
 FROM $FROM_IMAGE
 
 # setup timezone
@@ -21,10 +21,15 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get update && \
     apt-get install -q -y --no-install-recommends \
     build-essential \
+    clang \
     curl \
     git \
     gnupg \
+    libclang-dev \
+    libeigen3-dev \
+    libpoco-dev \
     lsb-release \
+    software-properties-common \
     tar \
     tmux \
     vim \
@@ -59,9 +64,23 @@ RUN apt-get update && \
     apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install -U\
+RUN pip3 install -q -y -U\
     argcomplete \
     autopep8 \
+    black \
     colcon-common-extensions \
+    isort \
     pyserial \
     pytest-rerunfailures
+
+# Get Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+ENV PATH=/root/.cargo/bin:$PATH
+
+# Install these plugins for cargo and colcon:
+RUN cargo install --debug cargo-ament-build  && \
+    pip3 install git+https://github.com/colcon/colcon-cargo.git && \
+    pip3 install git+https://github.com/colcon/colcon-ros-cargo.git
+
+RUN mkdir -p /workspace && echo "Did you forget to mount the repository into the Docker container?" > /workspace/HELLO.txt
+WORKDIR /workspace
