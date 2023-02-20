@@ -64,7 +64,7 @@ RUN apt-get update && \
     apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install -q -y -U\
+RUN pip3 install -q -U\
     argcomplete \
     autopep8 \
     black \

@@ -21,17 +21,15 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
      /bin/bash ~/miniconda.sh -b -p /opt/conda
 
 # Put conda in path so we can use conda activate
-ENV PATH=$CONDA_DIR/bin:$PATH
+ENV PATH=$CONDA_DIR/bin:${PATH}
 
 # Install Jupyter Lab, and packages for DL and NC
-RUN conda update conda --yes && \
+RUN rm ~/miniconda.sh && \
+    conda update conda --yes && \
     conda install -c conda-forge --quiet --yes \
     black \
     matplotlib \
     ffmpeg \
-    brian2 \
-    nengo \
-    nengo-gui \
     opencv \
     nodejs \
     ipympl \
@@ -41,14 +39,16 @@ RUN conda update conda --yes && \
     npm cache clean --force && \
     jupyter lab clean
 
-RUN conda activate base && \
-    pip3 install -q -y - U \
+SHELL ["/bin/bash", "-c", "source ~/.bashrc"]
+RUN conda init bash && \
+    conda activate base && \
+    pip3 install -q -U \
     brian2 \
     dm_control \
     nengo \
-    nengo-dl \
+    nengo-gui \
     nengo-extras \
-    nengo-gui
+    nengo-dl
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.19.0
