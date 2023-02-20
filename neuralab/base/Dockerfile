@@ -44,11 +44,14 @@ RUN conda init bash && \
     conda activate base && \
     pip3 install -q -U \
     brian2 \
+    mujoco \
     dm_control \
     nengo \
     nengo-gui \
     nengo-extras \
-    nengo-dl
+    nengo-dl \
+    scipy \
+    jupyterlab_code_formatter
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.19.0
