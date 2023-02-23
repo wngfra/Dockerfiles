@@ -70,6 +70,7 @@ RUN pip3 install -q -U\
     black \
     colcon-common-extensions \
     isort \
+    mujoco \
     pyserial \
     pytest-rerunfailures
 
