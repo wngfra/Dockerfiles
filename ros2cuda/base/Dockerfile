@@ -58,7 +58,7 @@ RUN apt-get update && \
     python3-dev \
     python3-pip \
     libgl1-mesa-dev libx11-6 libxau6 libxcb1 libxkbcommon-x11-0 \
-    xauth xvfb dbus-x11 x11-utils \
+    xauth xvfb dbus-x11 mesa-utils x11-utils \
     libavcodec-dev libavformat-dev libswscale-dev \
     xsltproc && \
     apt-get autoclean -y && apt-get autoremove -y && \
