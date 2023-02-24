@@ -83,5 +83,9 @@ RUN cargo install --debug cargo-ament-build  && \
     pip3 install git+https://github.com/colcon/colcon-cargo.git && \
     pip3 install git+https://github.com/colcon/colcon-ros-cargo.git
 
-RUN mkdir -p /workspace && echo "Did you forget to mount the repository into the Docker container?" > /workspace/HELLO.txt
+# Setup ipc and shared memory
+RUN sysctl -w kernel.shmmax=1073741824
+RUN echo "kernel.shm_permission=0666" >> /etc/sysctl.conf
+
+RUN mkdir -p /workspace
 WORKDIR /workspace
