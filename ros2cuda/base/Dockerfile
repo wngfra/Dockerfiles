@@ -16,6 +16,7 @@ RUN apt-get update && \
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
 
 # install packages
 RUN apt-get update && \
@@ -53,12 +54,13 @@ ENV ROS_VERSION=2 \
 RUN apt-get update && \
     apt-get install -q -y --no-install-recommends \
     ros-${ROS_DISTRO}-desktop \
-    libeigen3-dev \
-    libpoco-dev \
     python3-dev \
     python3-pip \
     libegl1-mesa-dev \
     libgl1-mesa-dev \
+    libglx0 \
+    libxext6 \
+    libxdmcp6 \
     libx11-6 \
     libxau6 \
     libxcb1 \
