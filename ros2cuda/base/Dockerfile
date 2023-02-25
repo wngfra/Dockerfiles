@@ -49,7 +49,7 @@ ENV ROS_DISTRO=$ROS_DISTRO
 ENV ROS_VERSION=2 \
     ROS_PYTHON_VERSION=3
 
-# Install ros2 packages and other tools
+# Install ros2 packages and GUI support
 RUN apt-get update && \
     apt-get install -q -y --no-install-recommends \
     ros-${ROS_DISTRO}-desktop \
@@ -57,9 +57,21 @@ RUN apt-get update && \
     libpoco-dev \
     python3-dev \
     python3-pip \
-    libgl1-mesa-dev libx11-6 libxau6 libxcb1 libxkbcommon-x11-0 \
-    xauth xvfb dbus-x11 mesa-utils x11-utils \
-    libavcodec-dev libavformat-dev libswscale-dev \
+    libegl1-mesa-dev \
+    libgl1-mesa-dev \
+    libx11-6 \
+    libxau6 \
+    libxcb1 \
+    libxkbcommon-x11-0 \
+    xauth \
+    xvfb \
+    dbus-x11 \
+    mesa-utils \
+    x11-utils \
+    freeglut3-dev \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
     xsltproc && \
     apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
