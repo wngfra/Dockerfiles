@@ -56,6 +56,7 @@ RUN apt-get update && \
     ros-${ROS_DISTRO}-desktop \
     python3-dev \
     python3-pip \
+    python3-rosdep \
     libegl1-mesa-dev \
     libgl1-mesa-dev \
     libglx0 \
@@ -90,3 +91,5 @@ RUN pip3 install -q -U\
 
 RUN mkdir -p /workspace
 WORKDIR /workspace
+
+RUN rosdep init && rosdep update
