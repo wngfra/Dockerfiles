@@ -1,7 +1,7 @@
 # Copyright 2023 wngfra.
 # SPDX-License-Identifier: Apache-2.0
 
-ARG FROM_IMAGE=nvcr.io/nvidia/cuda:12.0.0-runtime-ubuntu22.04
+ARG FROM_IMAGE=ubuntu:jammy
 FROM $FROM_IMAGE
 
 # setup timezone
@@ -16,7 +16,6 @@ RUN apt-get update && \
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
-ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
 
 # install packages
 RUN apt-get update && \
@@ -84,18 +83,8 @@ RUN pip3 install -q -U\
     black \
     colcon-common-extensions \
     isort \
-    mujoco \
     pyserial \
     pytest-rerunfailures
-
-# Get Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
-ENV PATH=/root/.cargo/bin:$PATH
-
-# Install these plugins for cargo and colcon:
-RUN cargo install --debug cargo-ament-build  && \
-    pip3 install git+https://github.com/colcon/colcon-cargo.git && \
-    pip3 install git+https://github.com/colcon/colcon-ros-cargo.git
 
 RUN mkdir -p /workspace
 WORKDIR /workspace
