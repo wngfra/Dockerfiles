@@ -6,8 +6,6 @@ FROM $FROM_IMAGE
 
 ENV LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
-USER root
-
 # Install base utilities
 RUN apt update && \
     apt install -y --no-install-recommends \
@@ -54,6 +52,9 @@ RUN conda init bash && \
     nengo-dl \
     scipy \
     jupyterlab_code_formatter
+
+RUN pip3 install git+https://github.com/brian-team/brian2tools.git
+WORKDIR /workspace
 
 # Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
 ENV TINI_VERSION v0.19.0
