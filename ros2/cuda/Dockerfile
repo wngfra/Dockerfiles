@@ -17,7 +17,7 @@ RUN apt-get update && \
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 ENV NVIDIA_VISIBLE_DEVICES=all
-ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
+ENV NVIDIA_DRIVER_CAPABILITIES=all
 
 # install packages
 RUN apt-get update && \
@@ -68,16 +68,18 @@ RUN apt-get update && \
     libxau6 \
     libxcb1 \
     libxkbcommon-x11-0 \
-    xauth \
-    xvfb \
     dbus-x11 \
     mesa-utils \
+    mesa-va-drivers \
+    vainfo \
+    xauth \
+    xsltproc \
+    xvfb \
     x11-utils \
     freeglut3-dev \
     libavcodec-dev \
     libavformat-dev \
-    libswscale-dev \
-    xsltproc && \
+    libswscale-dev && \
     apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
@@ -94,4 +96,5 @@ RUN pip3 install -q -U\
 RUN mkdir -p /workspace
 WORKDIR /workspace
 
-RUN rosdep init && rosdep update
+RUN rosdep init && \
+    rosdep update

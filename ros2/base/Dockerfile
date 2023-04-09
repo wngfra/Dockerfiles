@@ -56,24 +56,6 @@ RUN apt-get update && \
     python3-dev \
     python3-pip \
     python3-rosdep \
-    libegl1-mesa-dev \
-    libgl1-mesa-dev \
-    libglx0 \
-    libxext6 \
-    libxdmcp6 \
-    libx11-6 \
-    libxau6 \
-    libxcb1 \
-    libxkbcommon-x11-0 \
-    xauth \
-    xvfb \
-    dbus-x11 \
-    mesa-utils \
-    x11-utils \
-    freeglut3-dev \
-    libavcodec-dev \
-    libavformat-dev \
-    libswscale-dev \
     xsltproc && \
     apt-get autoclean -y && apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
