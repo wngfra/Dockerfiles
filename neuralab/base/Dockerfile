@@ -11,6 +11,7 @@ RUN apt update && \
     apt install -y --no-install-recommends \
     build-essential \
     git \
+    tini \
     wget && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
@@ -56,11 +57,7 @@ RUN conda init bash && \
 RUN pip3 install git+https://github.com/brian-team/brian2tools.git
 WORKDIR /workspace
 
-# Add Tini. Tini operates as a process subreaper for jupyter. This prevents kernel crashes.
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
-RUN chmod +x /usr/bin/tini
+ENTRYPOINT ["/tini", "--"]
 
 EXPOSE 8888
-ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["jupyter-lab", "--ip='0.0.0.0'", "--port=8888", "--no-browser", "--allow-root"]
