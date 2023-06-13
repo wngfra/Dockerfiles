@@ -1,7 +1,7 @@
 # Copyright 2023 wngfra.
 # SPDX-License-Identifier: Apache-2.0
 
-ARG FROM_IMAGE=ubuntu:jammy
+ARG FROM_IMAGE=nvcr.io/nvidia/cuda:12.1.1-base-ubuntu22.04
 FROM $FROM_IMAGE
 
 # setup timezone
@@ -16,6 +16,8 @@ RUN apt-get update && \
 
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility,graphics
 
 # install packages
 RUN apt-get update && \
@@ -58,6 +60,7 @@ RUN apt-get update && \
     python3-rosdep \
     libegl1-mesa-dev \
     libgl1-mesa-dev \
+    libglvnd0 \
     libglx0 \
     libxext6 \
     libxdmcp6 \
@@ -84,6 +87,7 @@ RUN pip3 install -q -U\
     black \
     colcon-common-extensions \
     isort \
+    mujoco \
     pyserial \
     pytest-rerunfailures
 

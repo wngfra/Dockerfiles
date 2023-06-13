@@ -1,7 +1,7 @@
 # Copyright 2023 wngfra.
 # SPDX-License-Identifier: Apache-2.0
 
-ARG FROM_IMAGE=nvcr.io/nvidia/cuda:12.1.0-runtime-ubuntu22.04
+ARG FROM_IMAGE=nvcr.io/nvidia/cuda:12.1.1-runtime-ubuntu22.04
 FROM $FROM_IMAGE
 
 # setup timezone
